@@ -1,0 +1,53 @@
+// Shoot Them Up Game, All Rights Reserved.
+
+#include "AI/STUAIController.h"
+#include "AI/STUAICharacter.h"
+#include "Components/STUAIPerceptionComponent.h"
+//#include "Components/AIPerceptionComponent.h"
+#include "Components/STURespawnComponent.h"
+#include "BehaviorTree/BlackboardComponent.h"
+
+ASTUAIController::ASTUAIController()
+{
+    STUAIPerceptionComponent = CreateDefaultSubobject<USTUAIPerceptionComponent>("STUPerceptionComponent");
+    // STUAIPerceptionComponent1 = CreateDefaultSubobject<USTUAIPerceptionComponent>("STUAIPerceptionComponent1");
+
+    SetPerceptionComponent(*STUAIPerceptionComponent);
+    // SetPerceptionComponent(*STUAIPerceptionComponent1);
+
+    RespawnComponent = CreateDefaultSubobject<USTURespawnComponent>("RespawnComponent");
+
+    bWantsPlayerState = true;
+}
+
+void ASTUAIController::OnPossess(APawn* InPawn)
+{
+    Super::OnPossess(InPawn);
+
+    if (const auto STUCharacter = Cast<ASTUAICharacter>(InPawn))
+    {
+        RunBehaviorTree(STUCharacter->BehaviorTreeAsset);
+    }
+}
+
+void ASTUAIController::Tick(float DeltaTime)
+{
+    Super::Tick(DeltaTime);
+    SetFocus(GetFocusOnActor());
+}
+// void ASTUAIController::Tick(float DeltaTime)
+//{
+//    Super::Tick(DeltaTime);
+//    const auto AimActor = STUAIPerceptionComponent->GetClosestEnemy();
+//    SetFocus(AimActor);
+//}
+
+AActor* ASTUAIController::GetFocusOnActor() const
+{
+
+    if (!GetBlackboardComponent()) return nullptr;
+    return Cast<AActor>(GetBlackboardComponent()->GetValueAsObject(FocusOnKeyName));
+
+    /*if (!GetBlackboardComponent()) return nullptr;
+    return Cast<AActor>(GetBlackboardComponent()->GetValueAsObject(FocusOnKeyName));*/
+}
