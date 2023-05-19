@@ -18,18 +18,32 @@ public:
     void SetTeamColor(const FLinearColor& Color) { TeamColor = Color; }
     FLinearColor GetTeamColor() const { return TeamColor; }
 
-    void AddKill() { ++KillsNum; }
+
+
+   // void AddKill() { ++KillsNum; }
+   //  int32 GetKillsNum() const { return KillsNum; }
+   //void AddDeath() { ++DeathsNum; }
+
+    void AddKill() { KillsNum++; }
     int32 GetKillsNum() const { return KillsNum; }
 
-    void AddDeath() { ++DeathsNum; }
+    void AddDeath() { DeathsNum++; }
     int32 GetDeathsNum() const { return DeathsNum; }
+   
+   
 
     void LogInfo();
+
 
 private:
     int32 TeamID;
     FLinearColor TeamColor;
 
+
     int32 KillsNum = 0;
     int32 DeathsNum = 0;
+    
+    
+    /*int32 KillsNum = 0;
+    int32 DeathsNum = 0;*/
 };

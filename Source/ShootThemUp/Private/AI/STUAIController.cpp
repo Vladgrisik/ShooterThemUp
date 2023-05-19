@@ -35,19 +35,11 @@ void ASTUAIController::Tick(float DeltaTime)
     Super::Tick(DeltaTime);
     SetFocus(GetFocusOnActor());
 }
-// void ASTUAIController::Tick(float DeltaTime)
-//{
-//    Super::Tick(DeltaTime);
-//    const auto AimActor = STUAIPerceptionComponent->GetClosestEnemy();
-//    SetFocus(AimActor);
-//}
+
 
 AActor* ASTUAIController::GetFocusOnActor() const
 {
 
     if (!GetBlackboardComponent()) return nullptr;
     return Cast<AActor>(GetBlackboardComponent()->GetValueAsObject(FocusOnKeyName));
-
-    /*if (!GetBlackboardComponent()) return nullptr;
-    return Cast<AActor>(GetBlackboardComponent()->GetValueAsObject(FocusOnKeyName));*/
 }

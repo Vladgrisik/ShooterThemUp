@@ -26,7 +26,7 @@ ASTUGameModeBase::ASTUGameModeBase()
 void ASTUGameModeBase::StartPlay()
 {
     Super::StartPlay();
-
+    
     SpawnBots();
     CreateTeamsInfo();
 
@@ -43,6 +43,7 @@ UClass* ASTUGameModeBase::GetDefaultPawnClassForController_Implementation(AContr
         return AIPawnClass;
     }
     return Super::GetDefaultPawnClassForController_Implementation(InController);
+
 }
 
 void ASTUGameModeBase::SpawnBots()
@@ -53,7 +54,7 @@ void ASTUGameModeBase::SpawnBots()
     {
         FActorSpawnParameters SpawnInfo;
         SpawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-
+       
         const auto STUAIController = GetWorld()->SpawnActor<AAIController>(AIControllerClass, SpawnInfo);
         RestartPlayer(STUAIController);
     }
@@ -62,7 +63,9 @@ void ASTUGameModeBase::SpawnBots()
 void ASTUGameModeBase::StartRound()
 {
     RoundCountDown = GameData.RoundTime;
+    
     GetWorldTimerManager().SetTimer(GameRoundTimerHandle, this, &ASTUGameModeBase::GameTimerUpdate, 1.0f, true);
+
 }
 
 void ASTUGameModeBase::GameTimerUpdate()
@@ -75,8 +78,9 @@ void ASTUGameModeBase::GameTimerUpdate()
 
         if (CurrentRound + 1 <= GameData.RoundsNum)
         {
-            ++CurrentRound;
+            CurrentRound = CurrentRound + 1;
             ResetPlayers();
+ 
             StartRound();
         }
         else
@@ -88,22 +92,28 @@ void ASTUGameModeBase::GameTimerUpdate()
 
 void ASTUGameModeBase::ResetPlayers()
 {
+
+
     if (!GetWorld()) return;
 
     for (auto It = GetWorld()->GetControllerIterator(); It; ++It)
     {
         ResetOnePlayer(It->Get());
     }
+
 }
 
 void ASTUGameModeBase::ResetOnePlayer(AController* Controller)
 {
+   
+    
     if (Controller && Controller->GetPawn())
     {
         Controller->GetPawn()->Reset();
     }
     RestartPlayer(Controller);
     SetPlayerColor(Controller);
+
 }
 
 void ASTUGameModeBase::CreateTeamsInfo()
@@ -111,6 +121,7 @@ void ASTUGameModeBase::CreateTeamsInfo()
     if (!GetWorld()) return;
 
     int32 TeamID = 1;
+
     for (auto It = GetWorld()->GetControllerIterator(); It; ++It)
     {
         const auto Controller = It->Get();
@@ -130,12 +141,12 @@ void ASTUGameModeBase::CreateTeamsInfo()
 
 FLinearColor ASTUGameModeBase::DetermineColorByTeamID(int32 TeamID) const
 {
+
     if (TeamID - 1 < GameData.TeamColors.Num())
     {
         return GameData.TeamColors[TeamID - 1];
     }
-    UE_LOG(
-        LogSTUGameModeBase, Warning, TEXT("No color for team id: %i, set to default: %s"), TeamID, *GameData.DefaultTeamColor.ToString());
+    UE_LOG(LogSTUGameModeBase, Warning, TEXT("No color for team id: %i, set to default: %s"), TeamID, *GameData.DefaultTeamColor.ToString());
     return GameData.DefaultTeamColor;
 }
 
@@ -155,6 +166,20 @@ void ASTUGameModeBase::SetPlayerColor(AController* Controller)
 void ASTUGameModeBase::Killed(AController* KillerController, AController* VictimController)
 {
     const auto KillerPlayerState = KillerController ? Cast<ASTUPlayerState>(KillerController->PlayerState) : nullptr;
+    const auto VictimPlayerState = KillerController ? Cast<ASTUPlayerState>(VictimController->PlayerState) : nullptr;
+
+    if (KillerPlayerState)
+    {
+        KillerPlayerState->AddKill();
+    }
+    if (VictimPlayerState)
+    {
+        VictimPlayerState->AddDeath();
+    }
+
+
+
+   /* const auto KillerPlayerState = KillerController ? Cast<ASTUPlayerState>(KillerController->PlayerState) : nullptr;
     const auto VictimPlayerState = VictimController ? Cast<ASTUPlayerState>(VictimController->PlayerState) : nullptr;
 
     if (KillerPlayerState)
@@ -165,7 +190,7 @@ void ASTUGameModeBase::Killed(AController* KillerController, AController* Victim
     if (VictimPlayerState)
     {
         VictimPlayerState->AddDeath();
-    }
+    }*/
 
     StartRespawn(VictimController);
 }
@@ -184,6 +209,20 @@ void ASTUGameModeBase::LogPlayerInfo()
 
         PlayerState->LogInfo();
     }
+
+
+   /* if (!GetWorld()) return;
+
+    for (auto It = GetWorld()->GetControllerIterator(); It; ++It)
+    {
+        const auto Controller = It->Get();
+        if (!Controller) continue;
+
+        const auto PlayerState = Cast<ASTUPlayerState>(Controller->PlayerState);
+        if (!PlayerState) continue;
+
+        PlayerState->LogInfo();
+    }*/
 }
 
 void ASTUGameModeBase::StartRespawn(AController* Controller)

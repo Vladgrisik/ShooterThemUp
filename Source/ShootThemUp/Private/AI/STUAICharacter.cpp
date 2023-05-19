@@ -55,16 +55,6 @@ void ASTUAICharacter::OnDeath()
 
 }
 
-//void ASTUAICharacter::OnDeath()
-//{
-//    Super::OnDeath();
-//
-//    const auto STUController = Cast<AAIController>(Controller);
-//    if (STUController && STUController->BrainComponent)
-//    {
-//        STUController->BrainComponent->Cleanup();
-//    }
-//}
 
 void ASTUAICharacter::OnHealthChanged(float Health, float HealthDelta)
 {

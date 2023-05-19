@@ -67,6 +67,7 @@ void USTUHealthComponent::ApplyDamage(float Damage, AController* InstigatedBy)
 
     if (IsDead())
     {
+       
         Killed(InstigatedBy);
         OnDeath.Broadcast();
     }
@@ -138,6 +139,14 @@ void USTUHealthComponent::Killed(AController* KillerController)
     const auto VictimController = Player ? Player->Controller : nullptr;
 
     GameMode->Killed(KillerController, VictimController);
+
+    /*const auto GameMode = Cast<ASTUGameModeBase>(GetWorld()->GetAuthGameMode());
+    if (!GameMode) return;
+
+    const auto Player = Cast<APawn>(GetOwner());
+    const auto VictimController = Player ? Player->Controller : nullptr;
+
+    GameMode->Killed(KillerController, VictimController);*/
 }
 
 float USTUHealthComponent::GetPointDamageModifier(AActor* DamagedActor, const FName& BoneName)

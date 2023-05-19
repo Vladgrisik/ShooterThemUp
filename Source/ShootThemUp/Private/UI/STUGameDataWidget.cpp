@@ -24,6 +24,7 @@ int32 USTUGameDataWidget::GetRoundSecondsRemaining() const
 
 ASTUGameModeBase* USTUGameDataWidget::GetSTUGameMode() const
 {
+    // return GetWorld() ? Cast<ASTUGameModeBase>(GetWorld()->GetAuthGameMode()) : nullptr;
     return GetWorld() ? Cast<ASTUGameModeBase>(GetWorld()->GetAuthGameMode()) : nullptr;
 }
 
