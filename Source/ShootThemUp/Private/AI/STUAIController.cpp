@@ -17,6 +17,8 @@ ASTUAIController::ASTUAIController()
 
     RespawnComponent = CreateDefaultSubobject<USTURespawnComponent>("RespawnComponent");
 
+   // RespawnComponent = CreateDefaultSubobject<USTURespawnComponent>("RespawnComponent");
+
     bWantsPlayerState = true;
 }
 

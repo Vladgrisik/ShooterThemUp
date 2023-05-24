@@ -176,23 +176,8 @@ void ASTUGameModeBase::Killed(AController* KillerController, AController* Victim
     {
         VictimPlayerState->AddDeath();
     }
-
-
-
-   /* const auto KillerPlayerState = KillerController ? Cast<ASTUPlayerState>(KillerController->PlayerState) : nullptr;
-    const auto VictimPlayerState = VictimController ? Cast<ASTUPlayerState>(VictimController->PlayerState) : nullptr;
-
-    if (KillerPlayerState)
-    {
-        KillerPlayerState->AddKill();
-    }
-
-    if (VictimPlayerState)
-    {
-        VictimPlayerState->AddDeath();
-    }*/
-
     StartRespawn(VictimController);
+  
 }
 
 void ASTUGameModeBase::LogPlayerInfo()
@@ -210,19 +195,6 @@ void ASTUGameModeBase::LogPlayerInfo()
         PlayerState->LogInfo();
     }
 
-
-   /* if (!GetWorld()) return;
-
-    for (auto It = GetWorld()->GetControllerIterator(); It; ++It)
-    {
-        const auto Controller = It->Get();
-        if (!Controller) continue;
-
-        const auto PlayerState = Cast<ASTUPlayerState>(Controller->PlayerState);
-        if (!PlayerState) continue;
-
-        PlayerState->LogInfo();
-    }*/
 }
 
 void ASTUGameModeBase::StartRespawn(AController* Controller)
@@ -233,7 +205,9 @@ void ASTUGameModeBase::StartRespawn(AController* Controller)
     const auto RespawnComponent = STUUtils::GetSTUPlayerComponent<USTURespawnComponent>(Controller);
     if (!RespawnComponent) return;
 
+
     RespawnComponent->Respawn(GameData.RespawnTime);
+
 }
 
 void ASTUGameModeBase::RespawnRequest(AController* Controller)
@@ -254,8 +228,19 @@ void ASTUGameModeBase::GameOver()
             Pawn->DisableInput(nullptr);
         }
     }
-
     SetMatchState(ESTUMatchState::GameOver);
+
+
+    /*for (auto Pawn : TActorRange<APawn>(GetWorld()))
+    {
+        if (Pawn)
+        {
+            Pawn->TurnOff();
+            Pawn->DisableInput(nullptr);
+        }
+    }
+
+    SetMatchState(ESTUMatchState::GameOver);*/
 }
 
 void ASTUGameModeBase::SetMatchState(ESTUMatchState State)

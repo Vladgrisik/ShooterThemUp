@@ -14,7 +14,6 @@ class SHOOTTHEMUP_API USTURespawnComponent : public UActorComponent
 public:
     USTURespawnComponent();
 
-    void Respawn1(int32 RespawnTime);
 
     void Respawn(int32 RespawnTime);
     int32 GetRespawnCountDown() const { return RespawnCountDown; }
@@ -22,13 +21,8 @@ public:
 
 private:
 
-    FTimerHandle RespawnTimerHandle1;
-    int32 RespawnCountDown1 = 0;
-
-
     FTimerHandle RespawnTimerHandle;
     int32 RespawnCountDown = 0;
 
-    void RespawnTimerUpdate1();
     void RespawnTimerUpdate();
 };

@@ -8,17 +8,6 @@ USTURespawnComponent::USTURespawnComponent()
     PrimaryComponentTick.bCanEverTick = false;
 }
 
-
-
-//void USTURespawnComponent::Respawn1(int32 RespawnTime)
-//{
-//    if (!GetWorld()) return;
-//
-//    RespawnCountDown1 = RespawnTime;
-//    GetWorld()->GetTimerManager().SetTimer(RespawnTimerHandle, this, &USTURespawnComponent::RespawnTimerUpdate, 1.0f, true);
-//}
-
-
 void USTURespawnComponent::Respawn(int32 RespawnTime)
 {
     if (!GetWorld()) return;
@@ -38,10 +27,13 @@ void USTURespawnComponent::RespawnTimerUpdate()
         if (!GameMode) return;
 
         GameMode->RespawnRequest(Cast<AController>(GetOwner()));
+    
     }
 }
 
 bool USTURespawnComponent::IsRespawnInProgress() const
 {
+    //return GetWorld() && GetWorld()->GetTimerManager().IsTimerActive(RespawnTimerHandle);
     return GetWorld() && GetWorld()->GetTimerManager().IsTimerActive(RespawnTimerHandle);
+
 }

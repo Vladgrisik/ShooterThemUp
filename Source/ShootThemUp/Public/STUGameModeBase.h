@@ -22,8 +22,6 @@ public:
     virtual void StartPlay() override;
     virtual UClass* GetDefaultPawnClassForController_Implementation(AController* InController) override;
 
-    //void Killed(AController* KillerController, AController* VictimController);
-
     void Killed(AController* KillerController, AController* VictimController);
 
     FGameData GetGameData() const { return GameData; }
@@ -31,7 +29,7 @@ public:
     int32 GetRoundSecondsRemaining() const { return RoundCountDown; }
 
     void RespawnRequest(AController* Controller);
-
+    
     virtual bool SetPause(APlayerController* PC, FCanUnpause CanUnpauseDelegate = FCanUnpause()) override;
     virtual bool ClearPause() override;
 
@@ -65,11 +63,12 @@ private:
     void SetPlayerColor(AController* Controller);
 
     void LogPlayerInfo();
-    //void LogPlayerInfo();
+
 
     void StartRespawn(AController* Controller);
 
     void GameOver();
+ 
 
     void SetMatchState(ESTUMatchState State);
 
