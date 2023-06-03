@@ -25,6 +25,7 @@ ASTUPlayerCharacter::ASTUPlayerCharacter(const FObjectInitializer& ObjInit) : Su
     CameraCollisionComponent->SetSphereRadius(10.0f);
     CameraCollisionComponent->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
     CameraCollisionComponent->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+   
 }
 
 void ASTUPlayerCharacter::BeginPlay()

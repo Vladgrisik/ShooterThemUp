@@ -118,10 +118,18 @@ enum class ESTUMatchState : uint8
     WaitingToStart = 0,
     InProgress,
     Pause,
-    GameOver
+    GameOver    
 };
-
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnMatchStateChangedSignature, ESTUMatchState);
+
+//enum class ESTUMatchState : uint8
+//{
+//    WaitingToStart = 0,
+//    InProgress,
+//    Pause,
+//    GameOver
+//};
+
 
 USTRUCT(BlueprintType)
 struct FLevelData

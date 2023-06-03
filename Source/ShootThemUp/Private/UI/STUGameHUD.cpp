@@ -31,6 +31,7 @@ void ASTUGameHUD::BeginPlay()
         GameWidget->SetVisibility(ESlateVisibility::Hidden);
     }
 
+
     if (GetWorld())
     {
         const auto GameMode = Cast<ASTUGameModeBase>(GetWorld()->GetAuthGameMode());
@@ -39,6 +40,14 @@ void ASTUGameHUD::BeginPlay()
             GameMode->OnMatchStateChanged.AddUObject(this, &ASTUGameHUD::OnMatchStateChanged);
         }
     }
+    /*if (GetWorld())
+    {
+        const auto GameMode = Cast<ASTUGameModeBase>(GetWorld()->GetAuthGameMode());
+        if (GameMode)
+        {
+            GameMode->OnMatchStateChanged.AddUObject(this, &ASTUGameHUD::OnMatchStateChanged);
+        }
+    }*/
 }
 
 void ASTUGameHUD::OnMatchStateChanged(ESTUMatchState State)

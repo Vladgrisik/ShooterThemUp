@@ -229,18 +229,8 @@ void ASTUGameModeBase::GameOver()
         }
     }
     SetMatchState(ESTUMatchState::GameOver);
+    //SetMatchState(ESTUMatchState::GameOver);
 
-
-    /*for (auto Pawn : TActorRange<APawn>(GetWorld()))
-    {
-        if (Pawn)
-        {
-            Pawn->TurnOff();
-            Pawn->DisableInput(nullptr);
-        }
-    }
-
-    SetMatchState(ESTUMatchState::GameOver);*/
 }
 
 void ASTUGameModeBase::SetMatchState(ESTUMatchState State)
@@ -249,6 +239,11 @@ void ASTUGameModeBase::SetMatchState(ESTUMatchState State)
 
     MatchState = State;
     OnMatchStateChanged.Broadcast(MatchState);
+
+   /* if (MatchState == State) return;
+
+    MatchState = State;
+    OnMatchStateChanged.Broadcast(MatchState);*/
 }
 
 bool ASTUGameModeBase::SetPause(APlayerController* PC, FCanUnpause CanUnpauseDelegate)
