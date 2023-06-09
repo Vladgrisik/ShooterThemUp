@@ -14,6 +14,7 @@ void USTUGoToMenuWidget::NativeOnInitialized()
     if (GoToMenuButton)
     {
         GoToMenuButton->OnClicked.AddDynamic(this, &USTUGoToMenuWidget::OnGoToMenu);
+        //GoToMenuButton->OnClicked.AddDynamic(this, &USTUGoToMenuWidget::OnGoToMenu);
     }
 }
 

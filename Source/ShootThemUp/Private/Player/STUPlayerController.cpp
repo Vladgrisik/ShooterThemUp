@@ -48,16 +48,28 @@ void ASTUPlayerController::SetupInputComponent()
 {
     Super::SetupInputComponent();
     if (!InputComponent) return;
-
+    
     InputComponent->BindAction("PauseGame", IE_Pressed, this, &ASTUPlayerController::OnPauseGame);
     InputComponent->BindAction("Mute", IE_Pressed, this, &ASTUPlayerController::OnMuteSound);
+
+    /*
+    Super::SetupInputComponent();
+    if (!InputComponent) return;
+
+    InputComponent->BindAction("PauseGame", IE_Pressed, this, &ASTUPlayerController::OnPauseGame);
+    InputComponent->BindAction("Mute", IE_Pressed, this, &ASTUPlayerController::OnMuteSound);*/
 }
 
 void ASTUPlayerController::OnPauseGame()
 {
+    
     if (!GetWorld() || !GetWorld()->GetAuthGameMode()) return;
 
     GetWorld()->GetAuthGameMode()->SetPause(this);
+    /*
+    if (!GetWorld() || !GetWorld()->GetAuthGameMode()) return;
+
+    GetWorld()->GetAuthGameMode()->SetPause(this);*/
 }
 
 void ASTUPlayerController::OnMuteSound()

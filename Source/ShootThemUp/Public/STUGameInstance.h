@@ -31,6 +31,9 @@ protected:
     UPROPERTY(EditDefaultsOnly, Category = "Game")
     FName MenuLevelName = NAME_None;
 
+   /* UPROPERTY(EditDefaultsOnly, Category = "Game")
+    FName MenuLevelName = NAME_None;*/
+
     UPROPERTY(EditDefaultsOnly, Category = "Sound")
     USoundClass* MasterSoundClass;
 
